@@ -92,5 +92,18 @@ def srvfreq_palabraso():
 	frequencies = df.to_json(orient='records')[1:-1].replace('},{', '} {')
 	return jsonify(fname=fname,n_palabras=n_palabras,frequencies=frequencies)
 
+##@app.route('/c-max_freq_palabras/<str:archivo>/<int:topn>')
+@app.route('/c-max_freq_palabras',methods=['POST'])
+def srvmax_freq_palabraso():
+	data = request.get_json()
+	fname = data['archivo']
+	topn = data['topn']
+	lista_texto_procesado = genera_lista_texto(fname)
+	n_palabras = num_palabras(lista_texto_procesado)
+	df = gen_df_frecuencias(lista_texto_procesado)
+	ltopn = df[0:topn]
+	frequencies = ltopn.to_json(orient='records')[1:-1].replace('},{', '} {')
+	return jsonify(fname=fname,n_palabras=n_palabras,frequencies=frequencies)
+
 if __name__ == '__main__':
     app.run(debug=True, port=8090)

@@ -27,3 +27,17 @@ if response.status_code == 200:
 	print("Petición exitosa")
 else:
     print(f"Error: {response.status_code}")
+
+
+
+data2 = {"archivo": 'reut2-004.sgm',"topn":2}
+# Crea la petición POST
+response = requests.post("http://127.0.0.1:8090/c-max_freq_palabras", json=data2)
+
+# Verifica el estado de la respuesta
+if response.status_code == 200:
+	json_response = response.json()
+	print(json_response)
+	print("Petición exitosa")
+else:
+    print(f"Error: {response.status_code}")
