@@ -1,1 +1,19 @@
-Instructivo taller de arranque
+Grupo 03
+Instructivo taller de arranque.
+
+1.
+Definimos el número de palabras en cualquiera de los archivos, como la # de palabras presentes en el título de cada archivo o en el cuerpo.
+Específicamente, el texto entre las etiquetas <TITLE></TITLE> y <BODY></BODY>.
+En ese sentido, no contamos etiquetas de encabezado ni información referente a la ubicación, fecha y el formato de los archivos.
+
+a) num palabras.py
+Corre cualquiera de los archivos con la opción --archivo='nombre archivo'
+Imprime a consola el total de palabras en el archivo.
+
+b) b-freq_palabras.py
+Corre cualquiera de los archivos con la opción --archivo='nombre archivo'
+Imprime un dataframe con cada palabra encontrada en el documento, y el número de inicidencias de cada palabra.
+
+c) c-n_palabtras_mas_freq.py
+Corre cualquiera de los archivos con la opción --archivo='nombre archivo'
+La opción --n=N donde N es el top-N de las palabras más frecuentes en el archivo específico.
