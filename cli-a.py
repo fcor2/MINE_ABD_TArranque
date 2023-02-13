@@ -79,8 +79,10 @@ if response.status_code == 200:
 	print("Petición exitosa")
 else:
     print(f"Error: {response.status_code}")
-ata5 = {"listaarchivos": 'reut2-004.sgm|reut2-001.sgm|reut2-002.sgm|reut2-003.sgm',"topn":2,"flagsinrank":0}
- Crea la petición POST
+
+
+data5 = {"listaarchivos": 'reut2-004.sgm|reut2-001.sgm|reut2-002.sgm|reut2-003.sgm',"topn":2,"flagsinrank":0}
+# Crea la petición POST
 response = requests.post("http://127.0.0.1:8090/f-n_max_freq_palabras", json=data5)
 
 # Verifica el estado de la respuesta
@@ -90,3 +92,15 @@ if response.status_code == 200:
 	print("Petición exitosa")
 else:
     print(f"Error: {response.status_code}")
+
+data6 = {"listaarchivos": 'reut2-004.sgm|reut2-001.sgm|reut2-002.sgm|reut2-003.sgm',"palabra_clave":'reuters'}
+# Crea la petición POST
+response = requests.post("http://127.0.0.1:8090/g-busqueda_arch_palabra", json=data6)
+
+# Verifica el estado de la respuesta
+if response.status_code == 200:
+	json_response = response.json()
+	print(json_response)
+	print("Petición exitosa")
+else:
+    print("Error: {response.status_code}")
