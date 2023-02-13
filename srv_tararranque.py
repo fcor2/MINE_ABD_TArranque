@@ -71,6 +71,19 @@ def gen_df_frecuencias(ls):
     df_s = df_s[['Palabras', 'Freq']]
     return df_s
 
+# concatena múltiples listas provenientes de n archivos
+
+def txt_proc_agregado(lista_files):
+    ''' 
+    Itera función de generación de texto sobre lista de archivos
+    '''
+    lista_texto_procesado = list()
+    
+    for archivo in lista_files:
+        lista_texto_procesado += genera_lista_texto(archivo)
+    
+    return lista_texto_procesado
+
 ##@app.route('/a-num_palabras/<str:archivo>')
 @app.route('/a-num_palabras',methods=['POST'])
 def srvnum_palabras():
@@ -92,9 +105,22 @@ def srvfreq_palabraso():
 	frequencies = df.to_json(orient='records')[1:-1].replace('},{', '} {')
 	return jsonify(fname=fname,n_palabras=n_palabras,frequencies=frequencies)
 
-##@app.route('/c-max_freq_palabras/<str:archivo>/<int:topn>')
+##@app.route('/c-max_freq_palabras/int:topn>')
 @app.route('/c-max_freq_palabras',methods=['POST'])
-def srvmax_freq_palabraso():
+def srvcmax_freq_palabraso():
+	data = request.get_json()
+	fname = 'reut2-004.sgm'
+	topn = data['topn']
+	lista_texto_procesado = genera_lista_texto(fname)
+	n_palabras = num_palabras(lista_texto_procesado)
+	df = gen_df_frecuencias(lista_texto_procesado)
+	ltopn = df[0:topn]
+	frequencies = ltopn.to_json(orient='records')[1:-1].replace('},{', '} {')
+	return jsonify(fname=fname,n_palabras=n_palabras,frequencies=frequencies)
+
+##@app.route('/d-max_freq_palabras/<str:archivo>/<int:topn>')
+@app.route('/d-max_freq_palabras',methods=['POST'])
+def srvdmax_freq_palabraso():
 	data = request.get_json()
 	fname = data['archivo']
 	topn = data['topn']
@@ -104,6 +130,50 @@ def srvmax_freq_palabraso():
 	ltopn = df[0:topn]
 	frequencies = ltopn.to_json(orient='records')[1:-1].replace('},{', '} {')
 	return jsonify(fname=fname,n_palabras=n_palabras,frequencies=frequencies)
+
+
+##@app.route('/e-dos_max_freq_palabras/<str:listaarchivos>/<int:topn>/<int:flagsinrank>')
+@app.route('/e-dos_max_freq_palabras',methods=['POST'])
+def srve_dosmax_freq_palabraso():
+	data = request.get_json()
+	listafname = data['listaarchivos']
+	listafiles = listafname.split("|")
+	topn = data['topn']
+	flagsinrank = data['flagsinrank']
+
+	lista_texto_procesado = txt_proc_agregado(listafiles)
+	n_palabras = num_palabras(lista_texto_procesado)
+	df = gen_df_frecuencias(lista_texto_procesado)
+	
+    #Selecciona el top m de palabras más frecuentes
+	if flagsinrank == 1:
+		ltopn = df[0:topn]
+		frequencies = ltopn.to_json(orient='records')[1:-1].replace('},{', '} {')
+	else:
+		frequencies = df.to_json(orient='records')[1:-1].replace('},{', '} {')
+	return jsonify(fname=listafname,n_palabras=n_palabras,frequencies=frequencies)
+
+##@app.route('/f-n_max_freq_palabras/<str:listaarchivos>/<int:topn>/<int:flagsinrank>')
+@app.route('/f-n_max_freq_palabras',methods=['POST'])
+def srvf_n_max_freq_palabraso():
+	data = request.get_json()
+	listafname = data['listaarchivos']
+	listafiles = listafname.split("|")
+	topn = data['topn']
+	flagsinrank = data['flagsinrank']
+
+	lista_texto_procesado = txt_proc_agregado(listafiles)
+	n_palabras = num_palabras(lista_texto_procesado)
+	df = gen_df_frecuencias(lista_texto_procesado)
+	
+    #Selecciona el top m de palabras más frecuentes
+	if flagsinrank == 1:
+		ltopn = df[0:topn]
+		frequencies = ltopn.to_json(orient='records')[1:-1].replace('},{', '} {')
+	else:
+		frequencies = df.to_json(orient='records')[1:-1].replace('},{', '} {')
+	return jsonify(fname=listafname,n_palabras=n_palabras,frequencies=frequencies)
+
 
 if __name__ == '__main__':
     app.run(debug=True, port=8090)
