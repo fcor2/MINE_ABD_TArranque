@@ -14,6 +14,11 @@ b) b-freq_palabras.py
 Corre cualquiera de los archivos con la opción --archivo='nombre archivo'
 Imprime un dataframe con cada palabra encontrada en el documento, y el número de inicidencias de cada palabra.
 
-c) c-n_palabtras_mas_freq.py
+c) c-n_palabras_mas_freq-reut2-000.py
+Imprime un dataframe seleccionando el top-n de las palabras más frecuentes en el archivo 'reut2-000.sgm'.
+La opción --n=N donde N es el top-N de las palabras más frecuentes en el archivo específico.
+
+d) d-n_palabras_mas_freq.py
 Corre cualquiera de los archivos con la opción --archivo='nombre archivo'
 La opción --n=N donde N es el top-N de las palabras más frecuentes en el archivo específico.
+Imprime un dataframe seleccionando el top-n de las palabras más frecuentes.

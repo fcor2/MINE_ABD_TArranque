@@ -201,9 +201,3 @@ print(
     '{0} es el archivo con más incidencias de: "{1}".'.format(arch_mas_freq, palabra_clave),
     '\n{0} contiene {1} incidencias.'.format(arch_mas_freq ,freq)
     )
-
-
-
-
-            
-
